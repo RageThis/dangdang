@@ -17,6 +17,7 @@ public class CategoryController {
     @RequestMapping("/getAll")
     public @ResponseBody
     Map getAll() {
+        System.out.println("aaaa");
         return cs.quarryAllcg();
     }
 }
