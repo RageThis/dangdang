@@ -20,6 +20,7 @@ public class KaptchaController {
     @RequestMapping("/getkaptcha")
     public void getKaptcha(HttpSession session, HttpServletResponse rs) throws IOException {
 
+
 //		生成文本内容
         String text = producer.createText();
 
