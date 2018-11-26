@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.springboot.dao.ProductDao">
+    <resultMap id="ddp" type="Product">
+        <id column="book_id" property="book_Id"/>
+        <result column="book_name" property="book_Name"/>
+        <result column="book_price" property="book_Price"/>
+        <result column="press" property="press"/>
+        <collection property="cg" ofType="Category">
+            <id column="category_id" property="category_Id"/>
+            <result column="category_name" property="category_Name"/>
+        </collection>
+    </resultMap>
+    <select id="quarryAll" resultMap="ddp">
+        select * from dd_product p
+        LEFT JOIN dd_category c on p.cid=c.category_id LIMIT #{start},#{rows}
+    </select>
+    <select id="quarryOne" resultType="Product">
+        select * from dd_product where book_id=#{id}
+    </select>
+    <update id="updateOne">
+        update dd_product set book_name=#{book_Name} where book_id=#{book_Id}
+    </update>
+    <select id="getCount" resultType="int">
+        select count(*) from dd_product
+    </select>
+    <delete id="deleteByIds">
+        delete from dd_product where book_id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="insertOne">
+        insert into dd_product (book_name,cid,book_price,dangprice,author,press)
+        values (#{book_Name},#{cid},#{book_Price},#{dangPrice},#{author},#{press})
+    </insert>
+</mapper>	
+    
